@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <div class="card">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div id="product-carousel" class="carousel slide" data-ride="carousel">
+
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img src="{{ asset('image/' ~ product.image) }}" alt="Product Image" class="product-image" style="width: 50%;">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h2 class="product-title">Title: {{ product.title }}</h2>
+
+                        <p class="product-description">Description: {{ product.description }}</p>
+                        <div class="price-section">
+                            <span class="price-current">Giá hiện tại: {{ product.price }}.000.000.VND</span>
+
+                        </div>
+                        <div class="price-section">
+                      
+                        </div>
+                        <div class="action">
+                            <form action="{{ path('app_add_to_cart', {'productId': product.id}) }}" method="POST">
+                                <button class="btn btn-primary mt-4" type="submit">Thêm vào giỏ hàng</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                <a href="http://127.0.0.1:8000/home" class="back-link">Back to Home</a>
+            </div>
+        </div>
+
+    
+    </div>
+{% endblock %}
