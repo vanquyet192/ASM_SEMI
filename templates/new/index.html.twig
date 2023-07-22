@@ -1,3 +1,7 @@
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +12,7 @@
     {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 
     {% block stylesheets %}
-        {{ encore_entry_link_tags('app') }}
+       
         <style>
             .navbar-nav .nav-item {
                 margin-right: 20px;
@@ -98,8 +102,10 @@
             }
 
             .footer {
-                background-color: #f8f9fa;
-                padding: 30px 0;
+                background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
             }
 
             .footer .row {
@@ -108,6 +114,7 @@
 
             .footer h5 {
                 margin-bottom: 20px;
+                color: #fff;
             }
 
             .footer ul {
@@ -196,8 +203,133 @@
 
 
 
+{% block body %}
+<style>
+    /* Custom styles for the news page */
+    .news-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start; /* Align items to the top */
+        margin: 20px;
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+    }
 
-    {% block body %}{% endblock %}
+    .news-image {
+        flex: 0 0 40%;
+        text-align: center;
+    }
+
+    .news-img {
+        max-width: 100%;
+        max-height: 200px; /* Reduced image height */
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .news-details {
+        flex: 0 0 58%; /* Adjusted to fit the new image size */
+        padding-left: 20px; /* Added padding for separation */
+    }
+
+    .news-title {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .news-introduction {
+        font-size: 20px;
+        color: #555;
+        margin-bottom: 15px;
+    }
+
+    .news-body {
+        font-size: 18px;
+        line-height: 1.6;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .news-author {
+        font-size: 16px;
+        margin-bottom: 10px;
+        color: #888;
+    }
+
+    .news-date {
+        font-size: 14px;
+        color: #888;
+    }
+
+    /* Added some spacing for the product cards */
+    .products-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: 20px;
+    }
+
+    .product-card {
+        flex-basis: calc(50% - 20px); /* Two cards per row */
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        text-decoration: none;
+        color: #333;
+    }
+
+    .product-card:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 8px 8px 0 0;
+    }
+
+    .product-title {
+        padding: 10px;
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+    }
+    .product-old {
+        padding: 13px;
+        font-size: 13px;
+        
+        text-align: center;
+    }
+
+</style>
+<div class="products-container">
+    {% for product in products %}
+    <a href="{{ path('app_detailnew', {'id': product.getId()}) }}" class="card product-card">
+        <img src="{{ asset('image/' ~ product.getImage()) }}" class="product-image" alt="{{ product.getTitle() }}">
+        <div class="card-body">
+            <h5 class="product-title">{{ product.getTitle() }}</h5>
+        </div>
+        <p class="product-old">Tác giả: {{ product.getname() }}, Ngày đăng: {{ product.dateAt ? product.dateAt|date('Y-m-d H:i:s') : '' }}</p>
+
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}
+
+
+
+
+
+
+
 
     <hr class="divider">
     

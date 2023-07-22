@@ -1,3 +1,7 @@
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +12,7 @@
     {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 
     {% block stylesheets %}
-        {{ encore_entry_link_tags('app') }}
+       
         <style>
             .navbar-nav .nav-item {
                 margin-right: 20px;
@@ -98,8 +102,10 @@
             }
 
             .footer {
-                background-color: #f8f9fa;
-                padding: 30px 0;
+                background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
             }
 
             .footer .row {
@@ -108,6 +114,7 @@
 
             .footer h5 {
                 margin-bottom: 20px;
+                color: #fff;
             }
 
             .footer ul {
@@ -196,8 +203,89 @@
 
 
 
+{% block body %}
+<style>
+    /* Custom styles for the news page */
+.news-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
 
-    {% block body %}{% endblock %}
+.news-image {
+    flex: 0 0 45%;
+    text-align: center;
+}
+
+.news-img {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.news-details {
+    flex: 0 0 50%;
+}
+
+.news-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.news-introduction {
+    font-size: 20px;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.news-body {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.news-author {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #888;
+}
+
+.news-date {
+    font-size: 14px;
+    color: #888;
+}
+
+    </style>
+<div class="news-container">
+    <div class="news-image">
+        <img src="{{ asset('image/' ~ product.getImage()) }}" class="news-img" alt="{{ product.getTitle() }}">
+    </div>
+    <div class="news-details">
+        <h2 class="news-title">{{ product.getTitle() }}</h2>
+        <p class="news-introduction">{{ product.getIntroduce() }}</p>
+        <p class="news-body">{{ product.getBody() }}</p>
+        <p class="news-author">Tác giả: {{ product.getname() }}</p>
+        <p class="news-date">Ngày đăng: {{ product.dateAt ? product.dateAt|date('Y-m-d H:i:s') : '' }}</p>
+        <!-- Add more details here if necessary, e.g., category, tags, etc. -->
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
 
     <hr class="divider">
     
