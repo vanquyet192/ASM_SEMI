@@ -28,10 +28,28 @@ class HomeController extends AbstractController
     public function index(ProductRepository $productRepository): Response
 {
     $products = $productRepository->findBy([], [], 8); 
-
+    $macbookProducts = $this->getProductsByCategory('Macbook', 4);
+    $iphoneProducts = $this->getProductsByCategory('Iphone', 4);
+    $ipadProducts = $this->getProductsByCategory('IPad', 4);
+    $aProducts = $this->getProductsByCategory('Airpods', 4);
+    $sProducts = $this->getProductsByCategory('Smart watch', 4);
     return $this->render('home/index.html.twig', [
         'products' => $products,
+        'macbookProducts' => $macbookProducts,
+        'iphoneProducts' => $iphoneProducts,
+        'ipadProducts' => $ipadProducts,
+        'aProducts' => $aProducts,
+        'sProducts' => $sProducts,
     ]);
+}
+private function getProductsByCategory(string $categoryName): array
+{
+    $category = $this->entityManager->getRepository(Category::class)->findOneBy(['name' => $categoryName]);
+    if (!$category) {
+        return []; // Return an empty array if category not found
+    }
+
+    return $this->entityManager->getRepository(Product::class)->findBy(['category' => $category]);
 }
     #[Route('/home1', name: 'app_home_all')]
     public function index2(ProductRepository $productRepository): Response

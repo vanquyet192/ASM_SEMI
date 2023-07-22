@@ -22,7 +22,9 @@ class DetailController extends AbstractController
         return $this->render('detail/index.html.twig', [
             'product' => $product,
         ]);
+        
     }
+    
     #[Route('/search', name: 'search')]
     public function search(Request $request, ProductRepository $productRepository): Response
     {
