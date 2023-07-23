@@ -1,7 +1,5 @@
 
 
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +10,7 @@
     {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 
     {% block stylesheets %}
-       
+        {{ encore_entry_link_tags('app') }}
         <style>
             .navbar-nav .nav-item {
                 margin-right: 20px;
@@ -102,10 +100,8 @@
             }
 
             .footer {
-                background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 1rem 0;
+                background-color: #f8f9fa;
+                padding: 30px 0;
             }
 
             .footer .row {
@@ -114,7 +110,6 @@
 
             .footer h5 {
                 margin-bottom: 20px;
-                color: #fff;
             }
 
             .footer ul {
@@ -148,29 +143,33 @@
 
                 <ul class="navbar-nav mx-auto">
                     
-                    <li class="nav-item mx-2 ">
+                    <li class="nav-item mx-1 ">
                         <a class="nav-link" href="macbook">Mac</a>
                     </li>
-                    <li class="nav-item mx-2">
+                    <li class="nav-item mx-1">
                         <a class="nav-link" href="ipad">Ipad</a>
                     </li>
-                    <li class="nav-item mx-2">
+                    <li class="nav-item mx-1">
                         <a class="nav-link" href="iphone">Iphone</a>
                     </li>
-                    <li class="nav-item mx-2">
+                    <li class="nav-item mx-1">
                         <a class="nav-link" href="watch">Watch</a>
                     </li>
-                    <li class="nav-item mx-2">
+                    <li class="nav-item mx-1">
                         <a class="nav-link" href="airpods">Airpods</a>
                     </li>
-                    <li class="nav-item mx-2">
+                    <li class="nav-item mx-1">
                         <a class="nav-link" href="contactnew">Contact</a>
                     </li>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link" href="postnew">Post New</a>
+                    <li class="nav-item mx-1">
+                        <a class="nav-link" href="postnew">News</a>
+                    </li>
+                    <li class="nav-item mx-1">
+                        <a class="nav-link" href="orderstatus">Order Status</a>
                     </li>
                 </ul>
                
+                
                 <ul class="navbar-nav">
                     <form class="d-flex" action="{{ path('search') }}" method="GET" style="margin-right: 40px;">
                         <input class="form-control me-sm-0" type="search" name="keyword" placeholder="Search" required>
@@ -308,8 +307,35 @@
         
         text-align: center;
     }
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f1f1f1;
+        margin: 0;
+        padding: 0;
+    }
 
+    header {
+        
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 36px;
+        font-weight: bold;
+    }
+
+    header p {
+        margin: 0;
+        font-size: 18px;
+    }
 </style>
+<header>
+    <h1>News Page</h1>
+    
+</header>
 <div class="products-container">
     {% for product in products %}
     <a href="{{ path('app_detailnew', {'id': product.getId()}) }}" class="card product-card">

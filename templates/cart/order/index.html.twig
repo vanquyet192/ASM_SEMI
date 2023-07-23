@@ -66,6 +66,7 @@
                 <button class="card product-card" onclick="window.location.href = '{{ path('app_order_detail_show', {'id': order.getId()}) }}'">
                     Order Detail
                 </button>
+                <a href="{{ path('app_order_edit', {'id': order.id}) }}">edit</a>
                 
                 
               </td>

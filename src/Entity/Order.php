@@ -41,6 +41,9 @@ class Order
     #[ORM\Column]
     private ?int $total = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $status = null;
+
    
 
    
@@ -165,6 +168,18 @@ class Order
     {
         // TODO: Implement __toString() method.
         return $this->id;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?string $status): static
+    {
+        $this->status = $status;
+
+        return $this;
     }
 
    

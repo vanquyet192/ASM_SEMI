@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+use Symfony\Component\Security\Core\User\UserInterface;
 use App\Entity\Cart;
 use App\Entity\Product;
 use App\Entity\User;
@@ -138,7 +138,7 @@ class CartController extends AbstractController
        $order->setUser($user); // Gán đối tượng người dùng vào đơn hàng
        $order->setTotal($totalPrice); // Gán giá trị total từ giỏ hàng vào đơn hàng
    
-       $form = $this->createForm(OrderType::class, $order);
+       $form = $this->createForm(OrderType::class, $order, ['hide_status' => true]);
        $form->handleRequest($request);
    
        if ($form->isSubmitted() && $form->isValid()) {
@@ -184,7 +184,7 @@ class CartController extends AbstractController
            'totalPrice' => $totalPrice,
        ]);
    }
-   
+
 
     #[Route('/order/{id}', name: 'app_order_delete', methods: ['POST'])]
     public function deleteOrder(Request $request, Order $order, OrderRepository $orderRepository): Response
@@ -200,6 +200,39 @@ class CartController extends AbstractController
     {
         return $this->render('order_success/index.html.twig', [
             'controller_name' => 'OrderSuccessController',
+        ]);
+    }
+
+
+    #[Route('/order/{id}/edit', name: 'app_order_edit', methods: ['GET', 'POST'])]
+    public function editOrder(Request $request, Order $order): Response
+    {
+        $form = $this->createForm(OrderType::class, $order, ['hide_status' => false]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Save the changes to the order
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute('app_order_index');
+        }
+
+        return $this->renderForm('cart/order/edit.html.twig', [
+            'order' => $order,
+            'form' => $form,
+        ]);
+    }
+    #[Route('/orderstatus', name: 'app_order_status')]
+    public function orderStatus(OrderRepository $orderRepository, UserInterface $user): Response
+    {
+        // Get the logged-in user's ID
+        $userId = $user->getId();
+
+        // Retrieve all orders with the given user ID
+        $orders = $orderRepository->findBy(['user' => $userId]);
+
+        return $this->render('orderstatus/index.html.twig', [
+            'orders' => $orders,
         ]);
     }
 }
