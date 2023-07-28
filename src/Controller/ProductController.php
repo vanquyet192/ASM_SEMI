@@ -15,54 +15,70 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/product')]
 class ProductController extends AbstractController
 {
+    
     #[Route('/', name: 'app_product_index', methods: ['GET'])]
     public function index(ProductRepository $productRepository): Response
     {
-        $products = $productRepository->findAll();
+        if ($this->isGranted('ROLE_ADMIN')) {
+            // If the user has the 'ROLE_ADMIN' role, render the error page
+             $products = $productRepository->findAll();
 
         return $this->render('product/index.html.twig', [
             'products' => $products,
         ]);
+        } else {
+            // If not, redirect to the home page
+            return $this->redirectToRoute('app_error');
+        }
+       
     }
 
     #[Route('/new', name: 'app_product_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ProductRepository $productRepository): Response
     {
-        $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $imageFile = $form->get('image')->getData();
-
-            if ($imageFile) {
-                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $newFilename = $originalFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
-
-                try {
-                    $imageFile->move(
-                        $this->getParameter('product_image_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // Xử lý ngoại lệ khi không thể di chuyển tệp
+        if ($this->isGranted('ROLE_ADMIN')) {
+            // If the user has the 'ROLE_ADMIN' role, render the error page
+            $product = new Product();
+            $form = $this->createForm(ProductType::class, $product);
+            $form->handleRequest($request);
+    
+            if ($form->isSubmitted() && $form->isValid()) {
+                $imageFile = $form->get('image')->getData();
+    
+                if ($imageFile) {
+                    $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    $newFilename = $originalFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+    
+                    try {
+                        $imageFile->move(
+                            $this->getParameter('product_image_directory'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {
+                        // Xử lý ngoại lệ khi không thể di chuyển tệp
+                    }
+    
+                    $product->setImage($newFilename);
+                } else {
+                    // Gán giá trị null cho thuộc tính image
+                    $product->setImage(null);
                 }
-
-                $product->setImage($newFilename);
-            } else {
-                // Gán giá trị null cho thuộc tính image
-                $product->setImage(null);
+    
+                $productRepository->save($product, true);
+    
+                return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
             }
-
-            $productRepository->save($product, true);
-
-            return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+    
+            return $this->render('product/new.html.twig', [
+                'product' => $product,
+                'form' => $form->createView(),
+            ]);
+        } else {
+            // If not, redirect to the home page
+            return $this->redirectToRoute('app_error');
         }
 
-        return $this->render('product/new.html.twig', [
-            'product' => $product,
-            'form' => $form->createView(),
-        ]);
+      
     }
 
     #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]

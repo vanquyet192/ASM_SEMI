@@ -1,13 +1,63 @@
+
+
+
+
+
+
+
+
+
+
+
 {% extends 'base_admin.html.twig' %}
 
-{% block title %}Edit Post{% endblock %}
+{% block title %}Update status order{% endblock %}
 
 {% block body %}
-    <h1>Edit Post</h1>
-
+<div class="title">
+    <h1>Update status</h1>
+    </div>
+<div class="update">
     {{ include('post/_form.html.twig', {'button_label': 'Update'}) }}
-
+</div>
+<div class="back">
     <a href="{{ path('app_post_index') }}">back to list</a>
-
+</div>
+<div class="delete">
     {{ include('post/_delete_form.html.twig') }}
+</div>
+
+<style>
+    .update {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+    }
+
+
+    .title {
+        display: flex;
+        justify-content: center;
+    }
+
+    .delete {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+    }
+
+    .back {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+     
+    }
+</style>
+
 {% endblock %}
+
+
+
+

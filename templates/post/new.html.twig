@@ -3,9 +3,66 @@
 {% block title %}New Post{% endblock %}
 
 {% block body %}
+<style>
+    body {
+        font-family: sans-serif;
+      }
+      
+      h1 {
+        text-align: center;
+      }
+      
+      form {
+        margin: 0 auto;
+        width: 500px;
+      }
+      
+      input, textarea {
+        margin-bottom: 10px;
+      }
+      
+      input[type="submit"] {
+        background-color: #000;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+      }
+      
+    </style>
     <h1>Create new Post</h1>
 
-    {{ include('post/_form.html.twig') }}
+    <form action="/new-post" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Enter title">
+        </div>
+        <div class="form-group">
+            <label for="introduce">Introduce</label>
+            <textarea class="form-control" id="introduce" name="introduce" rows="5" placeholder="Enter introduce"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="body">Body</label>
+            <textarea class="form-control" id="body" name="body" rows="10" placeholder="Enter body"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="end">End</label>
+            <input type="text" class="form-control" id="end" name="end" placeholder="Enter end">
+        </div>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter name">
+        </div>
+        <div class="form-group">
+            <label for="image">Image</label>
+            <input type="file" class="form-control" id="image" name="image">
+        </div>
+        <div class="form-group">
+            <label for="dateAt">DateAt</label>
+            <input type="date" class="form-control" id="dateAt" name="dateAt">
+        </div>
+        <button type="submit" class="btn btn-primary">Create</button>
+    </form>
 
     <a href="{{ path('app_post_index') }}">back to list</a>
 {% endblock %}

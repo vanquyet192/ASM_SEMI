@@ -34,13 +34,12 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         
-        - { path: ^/admin, roles: ROLE_ADMIN  }
-        - { path: ^/user, roles: ROLE_ADMIN1 }
-        - { path: ^/product, roles: ROLE_ADMIN }
-        - { path: ^/category, roles: ROLE_ADMIN }
-        
-        - { path: ^/contact, roles: ROLE_ADMIN }
-        - { path: ^/post, roles: ROLE_ADMIN }
+        - { path: ^/Admin, roles: ROLE_ADMIN  }
+        - { path: ^/User, roles: ROLE_ADMIN1 }
+        - { path: ^/Product1, roles: ROLE_ADMIN }
+        - { path: ^/Category, roles: ROLE_ADMIN }
+        - { path: ^/Contact, roles: ROLE_ADMIN }
+        - { path: ^/Post, roles: ROLE_ADMIN }
         - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/cart, roles: ROLE_USER }
         
